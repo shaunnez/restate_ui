@@ -1,0 +1,148 @@
+import { AuthBindings } from "@refinedev/core";
+import nookies from "nookies";
+
+import { supabaseClient } from "./utility";
+
+export const authProvider: AuthBindings = {
+  login: async ({ email, password }) => {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
+
+    if (data?.session) {
+      nookies.set(null, "token", data.session.access_token, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: "/",
+      });
+
+      return {
+        success: true,
+        redirectTo: "/",
+      };
+    }
+
+    // for third-party login
+    return {
+      success: false,
+      error: {
+        name: "LoginError",
+        message: "Invalid username or password",
+      },
+    };
+  },
+  logout: async () => {
+    nookies.destroy(null, "token");
+    const { error } = await supabaseClient.auth.signOut();
+
+    if (error) {
+      return {
+        success: false,
+        error,
+      };
+    }
+
+    return {
+      success: true,
+      redirectTo: "/login",
+    };
+  },
+  check: async (ctx) => {
+    const { token } = nookies.get(ctx);
+    const { data } = await supabaseClient.auth.getUser(token);
+    const { user } = data;
+
+    if (user) {
+      return {
+        authenticated: true,
+      };
+    }
+
+    return {
+      authenticated: false,
+      redirectTo: "/login",
+    };
+  },
+  getPermissions: async () => {
+    const user = await supabaseClient.auth.getUser();
+
+    if (user) {
+      return user.data.user?.role;
+    }
+
+    return null;
+  },
+  getIdentity: async () => {
+    const { data } = await supabaseClient.auth.getUser();
+
+    if (data?.user) {
+      return {
+        ...data.user,
+        name: data.user.email,
+      };
+    }
+
+    return null;
+  },
+  onError: async (error) => {
+    console.error(error);
+    return { error };
+  },
+  forgotPassword: async ({ email }) => {
+    if (email) {
+      // You can handle the reset password process according to your needs.
+      const { data, error } = await supabaseClient.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo:
+            window.location.origin + "/api/auth/callback?next=/update-password",
+        }
+      );
+      if (error) {
+        return {
+          success: false,
+          error,
+        };
+      }
+      return {
+        success: true,
+        redirectTo: "/",
+      };
+    } else {
+      return {
+        success: false,
+        redirectTo: "/",
+      };
+    }
+  },
+  updatePassword: async ({ password }) => {
+    if (password) {
+      // You can handle the update password process according to your needs.
+      const { data, error } = await supabaseClient.auth.updateUser({
+        password: password,
+      });
+      if (error) {
+        return {
+          success: false,
+          error,
+        };
+      }
+      // If the process is successful.
+      return {
+        success: true,
+        redirectTo: "/",
+      };
+    }
+    return {
+      success: false,
+      redirectTo: "/",
+    };
+  },
+};

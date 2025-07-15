@@ -1,0 +1,47 @@
+body textarea {
+  font: inherit;
+  letter-spacing: inherit;
+  color: currentColor;
+  padding: 4px 0 5px;
+  border: 0;
+  box-sizing: content-box;
+  background: none;
+  height: 1.4375em;
+  -webkit-tap-highlight-color: transparent;
+  display: block;
+  animation-name: mui-auto-fill-cancel;
+  animation-duration: 10ms;
+  padding: 16.5px 14px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.4375em;
+  letter-spacing: 0.00938em;
+  border: 1px solid rgba(255, 255, 255, 0.23);
+  margin-top: 16px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.MuiTabs-flexContainer button:last-child {
+  margin-left: auto !important;
+}
+
+.checkbox-list {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  background: #444;
+  padding: 4px 15px 3px 15px;
+  border-radius: 3px;
+}
+
+.checkbox-list > div {
+  margin-right: 10px;
+}
+
+.checkbox-list > div > label {
+  padding: 5px 0px 5px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+}
