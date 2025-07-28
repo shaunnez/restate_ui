@@ -73,7 +73,7 @@ function FormDialog({ open, setOpen, handleSave }: any) {
   );
 }
 
-export const SiteEdit = (props: any) => {
+const SiteEdit = (props: any) => {
   const [open, setOpen] = React.useState(false);
   const {
     saveButtonProps,
