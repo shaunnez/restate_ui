@@ -1,18 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { createClient } from "@supabase/supabase-js";
 import moment from "moment";
+import { createClient } from "@supabase/supabase-js";
+import { SUPABASE_URL, SUPABASE_KEY } from "../../src/utils/supabase/constants";
 
-const SUPABASE_URL = "https://lxsdaxzcxazbvbxcxbxw.supabase.co";
-const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4c2RheHpjeGF6YnZieGN4Ynh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM1MDE2MDksImV4cCI6MTk5OTA3NzYwOX0.zeWYUibz8eC47QfMGIsYJv1o-E8bKteUmdT_au8Pnlk";
+export const dynamic = "force-static";
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+export const runtime = "nodejs";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+      db: {
+        schema: "public",
+      },
+      auth: {
+        persistSession: true,
+      },
+    });
     const payload = { ...req.body, updated_at: moment().toISOString() };
     const metadata = { ...req.body.metadata };
     delete payload.metadata;
@@ -26,7 +33,7 @@ export default async function handler(
     }
     console.log("saving asset", payload, metadata);
 
-    const { data, error } = await supabase
+    const { data, error } = await supabaseClient
       .from("assets")
       .upsert(payload)
       .select();
@@ -41,7 +48,7 @@ export default async function handler(
     };
 
     console.log("inserting site asset", payload2);
-    const { data: data2, error: error2 } = await supabase
+    const { data: data2, error: error2 } = await supabaseClient
       .from("site_assets")
       .insert(payload2)
       .select();
@@ -67,7 +74,7 @@ export default async function handler(
         updated_at: moment().toISOString(),
       };
 
-      const { data: data3, error: error3 } = await supabase
+      const { data: data3, error: error3 } = await supabaseClient
         .from("service_history_records")
         .insert(payload3)
         .select();

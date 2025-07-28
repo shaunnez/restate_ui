@@ -1,20 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
-import moment from "moment";
+import { SUPABASE_URL, SUPABASE_KEY } from "../../src/utils/supabase/constants";
 
-const SUPABASE_URL = "https://lxsdaxzcxazbvbxcxbxw.supabase.co";
-const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4c2RheHpjeGF6YnZieGN4Ynh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM1MDE2MDksImV4cCI6MTk5OTA3NzYwOX0.zeWYUibz8eC47QfMGIsYJv1o-E8bKteUmdT_au8Pnlk";
+export const dynamic = "force-static";
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+export const runtime = "nodejs";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   try {
-    const { data, error } = await supabase
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+      db: {
+        schema: "public",
+      },
+      auth: {
+        persistSession: true,
+      },
+    });
+    const { data, error } = await supabaseClient
       .from("site_assets")
       .insert(req.body)
       .select();

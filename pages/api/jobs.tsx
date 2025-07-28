@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import moment, { MomentInput } from "moment";
 import axios from "axios";
 import { createClient } from "@supabase/supabase-js";
-import moment, { MomentInput } from "moment";
+import { SUPABASE_URL, SUPABASE_KEY } from "../../src/utils/supabase/constants";
 
-const SUPABASE_URL = "https://lxsdaxzcxazbvbxcxbxw.supabase.co";
-const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4c2RheHpjeGF6YnZieGN4Ynh3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODM1MDE2MDksImV4cCI6MTk5OTA3NzYwOX0.zeWYUibz8eC47QfMGIsYJv1o-E8bKteUmdT_au8Pnlk";
+export const dynamic = "force-static";
 
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+export const runtime = "nodejs";
 
 interface ContactDto {
   uuid: string;
@@ -130,7 +129,17 @@ const importCategories = async (syncDate: MomentInput) => {
 
         updated_at: moment().toISOString(),
       }));
-      const { data, error } = await supabase
+
+      const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+        db: {
+          schema: "public",
+        },
+        auth: {
+          persistSession: true,
+        },
+      });
+
+      const { data, error } = await supabaseClient
         .from("categories")
         .upsert(insertData);
       console.log("categories", insertData.length, error);
@@ -210,7 +219,16 @@ const importCustomers = async (syncDate: MomentInput) => {
           updated_at: moment().toISOString(),
         };
       });
-      const { data, error } = await supabase
+
+      const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+        db: {
+          schema: "public",
+        },
+        auth: {
+          persistSession: true,
+        },
+      });
+      const { data, error } = await supabaseClient
         .from("customers")
         .upsert(customers);
       console.log("customers", customers.length, error);
@@ -241,7 +259,15 @@ const importAddressesAndJobs = async (syncDate: MomentInput) => {
       }
     );
 
-    const { data: existingAddressData } = await supabase
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+      db: {
+        schema: "public",
+      },
+      auth: {
+        persistSession: true,
+      },
+    });
+    const { data: existingAddressData } = await supabaseClient
       .from("addresses")
       .select();
 
@@ -308,10 +334,12 @@ const importAddressesAndJobs = async (syncDate: MomentInput) => {
         return site;
       });
 
-      const { error } = await supabase.from("addresses").upsert(addresses);
+      const { error } = await supabaseClient
+        .from("addresses")
+        .upsert(addresses);
       console.log("addresses", addresses.length, error);
 
-      const { data: existingAddressData2 } = await supabase
+      const { data: existingAddressData2 } = await supabaseClient
         .from("addresses")
         .select();
 
@@ -327,7 +355,7 @@ const importAddressesAndJobs = async (syncDate: MomentInput) => {
         delete x.address_description;
       });
 
-      const { data: siteData, error: siteError } = await supabase
+      const { data: siteData, error: siteError } = await supabaseClient
         .from("sites")
         .upsert(sites.filter((x) => x.id))
         .select();
@@ -344,8 +372,16 @@ export default async function handler(
   res: NextApiResponse
 ) {
   let syncDate = null;
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY, {
+    db: {
+      schema: "public",
+    },
+    auth: {
+      persistSession: true,
+    },
+  });
   if (req.query.syncType === "current") {
-    const { data: syncDates } = await supabase.from("sync_date").select();
+    const { data: syncDates } = await supabaseClient.from("sync_date").select();
     if (syncDates && syncDates.length > 0) {
       syncDate = moment(syncDates[0].sync_date, "DD-MM-YYYY");
     }
@@ -354,7 +390,7 @@ export default async function handler(
   await importCustomers(syncDate);
   await importAddressesAndJobs(syncDate);
 
-  const hmm = await supabase
+  const hmm = await supabaseClient
     .from("sync_date")
     .upsert({ id: 1, sync_date: moment().format("DD-MM-YYYY") });
   res.status(200).json({ result: true });
