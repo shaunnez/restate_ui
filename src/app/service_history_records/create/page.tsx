@@ -6,7 +6,7 @@ import { DateTimePicker } from "@mui/x-date-pickers";
 import React from "react";
 import { useSelect } from "@refinedev/core";
 
-export const ServiceHistoryRecordsCreate = () => {
+const ServiceHistoryRecordsCreate = () => {
   const {
     saveButtonProps,
     refineCore: { queryResult, formLoading },

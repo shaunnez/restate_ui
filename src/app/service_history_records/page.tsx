@@ -11,7 +11,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { useExport } from "@refinedev/core";
 
-export const ServiceHistoryRecordsList = () => {
+const ServiceHistoryRecordsList = () => {
   const { triggerExport, isLoading: exportLoading } = useExport<any>({
     pageSize: 1000,
     resource: "service_history_records",

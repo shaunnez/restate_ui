@@ -12,7 +12,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useParsed } from "@refinedev/core";
 import { useRouter } from "next/navigation";
 
-export const SuppliersEdit = (props: any) => {
+const SuppliersEdit = (props: any) => {
   const {
     saveButtonProps,
     refineCore: { queryResult, formLoading },

@@ -6,7 +6,7 @@ import { Box, TextField, Autocomplete } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
 import { useSelect } from "@refinedev/core";
 
-export const AssetsCreate = () => {
+const AssetsCreate = () => {
   const {
     saveButtonProps,
     refineCore: { formLoading },

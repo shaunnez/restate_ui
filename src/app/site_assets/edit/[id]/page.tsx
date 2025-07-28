@@ -8,7 +8,7 @@ import moment from "moment";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { useParsed, useSelect } from "@refinedev/core";
 
-export const SiteAssetEdit = (props: any) => {
+const SiteAssetEdit = (props: any) => {
   const { id } = useParsed();
   const {
     saveButtonProps,

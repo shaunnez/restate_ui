@@ -14,7 +14,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import { List } from "@refinedev/mui";
 
-export const AssetsEdit = (props: any) => {
+const AssetsEdit = (props: any) => {
   const { id } = useParsed();
   const {
     saveButtonProps,

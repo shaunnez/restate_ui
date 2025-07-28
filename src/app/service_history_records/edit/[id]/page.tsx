@@ -8,7 +8,7 @@ import moment, { Moment } from "moment";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { useParsed, useSelect, useGetIdentity } from "@refinedev/core";
 
-export const ServiceHistoryRecordEdit = (props: any) => {
+const ServiceHistoryRecordEdit = (props: any) => {
   const { id } = useParsed();
   const {
     saveButtonProps,

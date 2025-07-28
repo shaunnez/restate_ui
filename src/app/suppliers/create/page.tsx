@@ -6,7 +6,7 @@ import { useForm } from "@refinedev/react-hook-form";
 
 import StatusList from "@components/StatusList";
 
-export const SuppliersCreate = () => {
+const SuppliersCreate = () => {
   const {
     saveButtonProps,
     refineCore: { formLoading },

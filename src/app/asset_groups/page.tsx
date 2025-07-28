@@ -21,7 +21,7 @@ import {
 
 import { useExport, useSelect, useCreate } from "@refinedev/core";
 
-export const AssetGroupsList = () => {
+const AssetGroupsList = () => {
   const [open, setOpen] = React.useState(false);
   const [modalType, setModalType] = React.useState("");
   const [modalTypeStr, setModalTypeStr] = React.useState("");

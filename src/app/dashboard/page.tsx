@@ -7,7 +7,7 @@ import { useTable } from "@refinedev/core";
 
 let theTimeout = null as any;
 
-export const Dashboard = () => {
+const Dashboard = () => {
   const [selectedStatusList, setSelectedStatusList] = useState([1, 2]);
   const [markers, setMarkers] = useState([] as any[]);
 

@@ -12,7 +12,7 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-export const AssetEdit = (props: any) => {
+const AssetEdit = (props: any) => {
   const { id } = useParsed();
   const {
     saveButtonProps,

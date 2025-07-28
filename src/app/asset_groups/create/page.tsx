@@ -5,12 +5,11 @@ import { useForm } from "@refinedev/react-hook-form";
 import StatusList from "@components/StatusList";
 import { useSelect } from "@refinedev/core";
 
-export const AssetsCreate = () => {
+const AssetsCreate = () => {
   const {
     saveButtonProps,
     refineCore: { formLoading },
     register,
-    control,
     formState: { errors },
     setValue,
   } = useForm({ refineCoreProps: { resource: "assets" } });
@@ -59,7 +58,6 @@ export const AssetsCreate = () => {
           })}
           error={!!(errors as any)?.name}
           helperText={(errors as any)?.name?.message}
-          margin="normal"
           fullWidth
           type="text"
           label="Name"
@@ -69,7 +67,6 @@ export const AssetsCreate = () => {
           {...register("description")}
           error={!!(errors as any)?.description}
           helperText={(errors as any)?.description?.message}
-          margin="normal"
           fullWidth
           type="text"
           label="Description"
@@ -94,7 +91,7 @@ export const AssetsCreate = () => {
               option?.value?.toString() === (value?.value ?? value)?.toString()
             }
             renderInput={(params) => (
-              <TextField {...params} label="Type" margin="normal" fullWidth />
+              <TextField {...params} label="Type" fullWidth />
             )}
           />
         )}
@@ -117,7 +114,7 @@ export const AssetsCreate = () => {
               }
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Make" margin="normal" fullWidth />
+              <TextField {...params} label="Make" fullWidth />
             )}
           />
         )}
@@ -140,7 +137,7 @@ export const AssetsCreate = () => {
               }
             }}
             renderInput={(params) => (
-              <TextField {...params} label="Model" margin="normal" fullWidth />
+              <TextField {...params} label="Model" fullWidth />
             )}
           />
         )}
@@ -149,7 +146,6 @@ export const AssetsCreate = () => {
           {...register("plant")}
           error={!!(errors as any)?.plant}
           helperText={(errors as any)?.plant?.message}
-          margin="normal"
           fullWidth
           type="text"
           label="Plant"
@@ -160,7 +156,6 @@ export const AssetsCreate = () => {
           {...register("consumption")}
           error={!!(errors as any)?.consumption}
           helperText={(errors as any)?.consumption?.message}
-          margin="normal"
           fullWidth
           type="text"
           label="Consumption"

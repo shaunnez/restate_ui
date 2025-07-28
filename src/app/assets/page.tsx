@@ -11,7 +11,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { useExport, useSelect } from "@refinedev/core";
 
-export const AssetList = () => {
+const AssetList = () => {
   const { triggerExport, isLoading: exportLoading } = useExport<any>({
     pageSize: 1000,
   });

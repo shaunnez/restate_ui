@@ -8,7 +8,7 @@ import { useForm } from "@refinedev/react-hook-form";
 import StatusList from "@components/StatusList";
 import { useSelect } from "@refinedev/core";
 
-export const AssetsCreate = () => {
+const AssetsCreate = () => {
   const {
     saveButtonProps,
     refineCore: { formLoading },
