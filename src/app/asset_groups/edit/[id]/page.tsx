@@ -11,7 +11,7 @@ import { useParsed, useSelect } from "@refinedev/core";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import { DataGrid } from "@mui/x-data-grid";
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { List } from "@refinedev/mui";
 
 const AssetsEdit = (props: any) => {

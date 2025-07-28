@@ -1,7 +1,5 @@
 "use client";
 
-import { authProvider } from "src/authProvider";
-
 import { Create } from "@refinedev/mui";
 import { Box, TextField } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
