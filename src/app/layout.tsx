@@ -135,7 +135,7 @@ export default function RootLayout({
                       warnWhenUnsavedChanges: true,
                       useNewQueryKeys: true,
                       projectId: "gOa9Je-8GIbbE-n0HkY2",
-                      title: { text: "Refine Project", icon: <AppIcon /> },
+                      title: { text: "RESTATE", icon: <AppIcon /> },
                     }}
                   >
                     {children}
