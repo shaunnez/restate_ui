@@ -19,7 +19,6 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-import { GetServerSideProps } from "next";
 import { useExport, useSelect, useCreate } from "@refinedev/core";
 
 export const AssetGroupsList = () => {
@@ -344,31 +343,5 @@ function FormDialog({ type, type_label, open, setOpen, handleSave }: any) {
     </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
-  const { authenticated, redirectTo } = await authProvider.check(context);
-
-  const translateProps = await serverSideTranslations(context.locale ?? "en", [
-    "common",
-  ]);
-
-  if (!authenticated) {
-    return {
-      props: {
-        ...translateProps,
-      },
-      redirect: {
-        destination: `${redirectTo}?to=${encodeURIComponent("/asset_groups")}`,
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      ...translateProps,
-    },
-  };
-};
 
 export default AssetGroupsList;

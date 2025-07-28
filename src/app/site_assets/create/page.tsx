@@ -1,6 +1,5 @@
 "use client";
 
-import { GetServerSideProps } from "next";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import { Create } from "@refinedev/mui";
 import { Box, TextField, Autocomplete } from "@mui/material";

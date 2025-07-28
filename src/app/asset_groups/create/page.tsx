@@ -1,5 +1,4 @@
 "use client";
-import { GetServerSideProps } from "next";
 import { Create } from "@refinedev/mui";
 import { Box, TextField, Autocomplete } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
@@ -175,32 +174,6 @@ export const AssetsCreate = () => {
       </Box>
     </Create>
   );
-};
-
-export const getServerSideProps: GetServerSideProps<{}> = async (context) => {
-  const { authenticated, redirectTo } = await authProvider.check(context);
-
-  const translateProps = await serverSideTranslations(context.locale ?? "en", [
-    "common",
-  ]);
-
-  if (!authenticated) {
-    return {
-      props: {
-        ...translateProps,
-      },
-      redirect: {
-        destination: `${redirectTo}?to=${encodeURIComponent("/assets")}`,
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {
-      ...translateProps,
-    },
-  };
 };
 
 export default AssetsCreate;

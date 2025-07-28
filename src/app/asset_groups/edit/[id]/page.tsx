@@ -4,7 +4,6 @@ import { useState } from "react";
 import { DateField, Edit, EditButton, useDataGrid } from "@refinedev/mui";
 import { Autocomplete, Box, TextField, Tab } from "@mui/material";
 import { useForm } from "@refinedev/react-hook-form";
-import { GetServerSideProps } from "next";
 import moment from "moment";
 import { DateTimePicker } from "@mui/x-date-pickers";
 import StatusList from "@components/StatusList";
