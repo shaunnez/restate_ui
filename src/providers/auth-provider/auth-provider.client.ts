@@ -87,6 +87,24 @@ export const authProviderClient: AuthProvider = {
       },
     };
   },
+  forgotPassword: async ({ email }) => {
+  try {
+    const { data, error } = await supabaseBrowserClient.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset-callback`, // or your desired page
+    });
+
+    console.log("resetPasswordForEmail ->", { data, error });
+
+    if (error) {
+      return { success: false, error };
+    }
+
+    return { success: true };
+  } catch (err: any) {
+    console.error("forgotPassword threw:", err);
+    return { success: false, error: err };
+  }
+},
   check: async () => {
     const { data, error } = await supabaseBrowserClient.auth.getUser();
     const { user } = data;
