@@ -1,6 +1,5 @@
 import { type CookieOptions, createServerClient } from "@supabase/ssr";
-import { type NextRequest, NextResponse } from "next/server";
-import { SUPABASE_KEY, SUPABASE_URL } from "./constants";
+import { type NextRequest, NextResponse } from "next/server"; 
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
@@ -8,8 +7,9 @@ export async function updateSession(request: NextRequest) {
       headers: request.headers,
     },
   });
-
-  const supabase = createServerClient(SUPABASE_URL, SUPABASE_KEY, {
+  
+  const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,{
     cookies: {
       get(name: string) {
         return request.cookies.get(name)?.value;
