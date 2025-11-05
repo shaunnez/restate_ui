@@ -147,7 +147,7 @@ const Dashboard = () => {
   }, [selectedStatusList]);
   return (
     <div>
-      <Script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDnqaI9lrw8c7JyvKvdxx-F2lp6MsaH080&libraries=places" />
+      <Script src="https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places" />
       <Card>
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
